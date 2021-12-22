@@ -5,6 +5,7 @@ let userGuess = [];
 let wrongCount = 0;
 let answer = wordBank[Math.floor(Math.random()*wordBank.length)].toLowerCase();
 let userInput;
+let format = [`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?+`];
 const displayHangman = () => {
   const oneWrong = `
   _______
@@ -93,6 +94,15 @@ ___|___
   }
 }
 const guess = () => {
+  console.log("userInput", userInput);
+  if (userGuess.includes(userInput)) {
+    console.log("You already guessed that. Try again.");
+    return;
+  }
+  if (userGuess.includes(format)) {
+    console.log("Please enter a valid character.");
+    return;
+  }
   if (answer.indexOf(userInput) !== -1) {
     console.log("You guess right.");
   } else {
@@ -105,10 +115,10 @@ const start = () => {
   while (n <= 7) {
     n++;
     userInput = prompt.question("Guess a letter: ").toLowerCase();
-    userGuess.push(userInput);
     console.log("To stop, press CTRL + C");
     console.log('You guessed', userInput);
     guess();
+    userGuess.push(userInput);
   }
 }
 start();
